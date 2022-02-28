@@ -3,10 +3,9 @@ package gallery
 import (
 	"fav-imgs/gallery/image"
 	. "fav-imgs/gallery/interfaces"
+	"fav-imgs/gallery/persistence"
 	"fmt"
-	"math/rand"
 	"testing"
-	"time"
 )
 
 func TestGalleryViewer_ImageList(t *testing.T) {
@@ -62,21 +61,7 @@ func (m mockPersistence) GetImages() map[string]Image {
 }
 
 func (m *mockPersistence) AddImage(image Image) (id string) {
-	id = RandStringRunes(10)
+	id = persistence.RandStringRunes(10)
 	m.images[id] = image
 	return id
-}
-
-func init() {
-	rand.Seed(time.Now().UnixNano())
-}
-
-var letterRunes = []rune("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890#$%&-_*çÇ¡¿?!")
-
-func RandStringRunes(n int) string {
-	b := make([]rune, n)
-	for i := range b {
-		b[i] = letterRunes[rand.Intn(len(letterRunes))]
-	}
-	return string(b)
 }

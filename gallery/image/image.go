@@ -9,6 +9,11 @@ type image struct {
 	url   string
 }
 
+type Json struct {
+	Title string
+	Url   string
+}
+
 func (i image) GetTitle() string {
 	return i.title
 }

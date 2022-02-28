@@ -3,6 +3,7 @@ package main
 import (
 	"fav-imgs/gallery"
 	"fav-imgs/gallery/interfaces"
+	"fav-imgs/gallery/persistence"
 	"fmt"
 	"io/ioutil"
 	"net/http"
@@ -11,7 +12,7 @@ import (
 
 func listImages() func(w http.ResponseWriter, r *http.Request) {
 	return func(w http.ResponseWriter, r *http.Request) {
-		imageGallery := gallery.GetReader(gallery.GetPersistenceReader())
+		imageGallery := gallery.GetReader(persistence.GetPersistenceReader())
 
 		output := formatGallery(imageGallery)
 		output = addGlobalHtml(output)
