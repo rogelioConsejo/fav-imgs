@@ -6,6 +6,9 @@ Just download and build with Golang using `go build`, then run the executable. I
 - To add an image go to `http://localhost:8080/add`
 - To list existing images goto `http://localhost:8080/list`
 
+### Important note
+This version is only for local deployment and testing because of some hard-coded values. I will update it to make it web-deployable in the future.
+
 ## Implemented
 - List all images
 - Add image
