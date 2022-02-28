@@ -6,6 +6,6 @@ import (
 )
 
 func TestPersistence_GetImages(t *testing.T) {
-	imageGallery := GetReader(GetPersistence())
+	imageGallery := GetReader(GetPersistenceReader())
 	fmt.Printf("%+v", imageGallery.ImageList())
 }

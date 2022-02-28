@@ -11,7 +11,7 @@ import (
 
 func listImages() func(w http.ResponseWriter, r *http.Request) {
 	return func(w http.ResponseWriter, r *http.Request) {
-		imageGallery := gallery.GetReader(gallery.GetPersistence())
+		imageGallery := gallery.GetReader(gallery.GetPersistenceReader())
 
 		output := formatGallery(imageGallery)
 		output = addGlobalHtml(output)

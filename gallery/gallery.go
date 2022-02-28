@@ -6,7 +6,7 @@ type galleryReader struct {
 	persistence Read
 }
 
-func (g galleryReader) ImageList() []Image {
+func (g galleryReader) ImageList() map[string]Image {
 	return g.persistence.GetImages()
 }
 
@@ -18,7 +18,7 @@ type galleryImageAdder struct {
 	persistence Add
 }
 
-func (g galleryImageAdder) Add(image Image) (id uint) {
+func (g galleryImageAdder) Add(image Image) (id string) {
 	return g.persistence.AddImage(image)
 }
 

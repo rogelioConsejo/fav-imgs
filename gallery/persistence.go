@@ -6,10 +6,16 @@ import "fav-imgs/gallery/image"
 type persistence struct {
 }
 
-func (p persistence) GetImages() []Image {
-	return []Image{image.NewImage("1", "https://picsum.photos/200/300"), image.NewImage("2", "https://picsum.photos/300/300")}
+// GetImages TODO: Fully Implement
+func (p persistence) GetImages() map[string]Image {
+	images := make(map[string]Image)
+	images["0"] = image.NewImage("1", "https://picsum.photos/200/300")
+	images["1"] = image.NewImage("2", "https://picsum.photos/200/250")
+	images["2"] = image.NewImage("3", "https://picsum.photos/200/320")
+
+	return images
 }
 
-func GetPersistence() Persistence {
+func GetPersistenceReader() Read {
 	return persistence{}
 }
