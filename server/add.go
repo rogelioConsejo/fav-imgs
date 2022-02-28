@@ -1,4 +1,4 @@
-package main
+package server
 
 import (
 	"fav-imgs/gallery"
@@ -9,7 +9,7 @@ import (
 	"net/http"
 )
 
-func addImage() func(w http.ResponseWriter, r *http.Request) {
+func AddImage() func(w http.ResponseWriter, r *http.Request) {
 	return func(w http.ResponseWriter, r *http.Request) {
 		switch r.Method {
 		case http.MethodGet:

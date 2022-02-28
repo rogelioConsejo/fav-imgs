@@ -1,4 +1,4 @@
-package main
+package server
 
 import (
 	"fav-imgs/gallery"
@@ -10,7 +10,7 @@ import (
 	"strings"
 )
 
-func listImages() func(w http.ResponseWriter, r *http.Request) {
+func ListImages() func(w http.ResponseWriter, r *http.Request) {
 	return func(w http.ResponseWriter, r *http.Request) {
 		imageGallery := gallery.GetReader(persistence.GetPersistenceReader())
 

@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fav-imgs/server"
 	"fmt"
 	"log"
 	"net/http"
@@ -9,8 +10,8 @@ import (
 func main() {
 	port := 8080
 
-	http.HandleFunc("/list", listImages())
-	http.HandleFunc("/add", addImage())
+	http.HandleFunc("/list", server.ListImages())
+	http.HandleFunc("/add", server.AddImage())
 
 	fmt.Printf("Starting server at port %d\n", port)
 	if err := http.ListenAndServe(":"+fmt.Sprintf("%d", port), nil); err != nil {
