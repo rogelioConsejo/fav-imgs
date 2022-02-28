@@ -11,7 +11,7 @@ import (
 
 func listImages() func(w http.ResponseWriter, r *http.Request) {
 	return func(w http.ResponseWriter, r *http.Request) {
-		imageGallery := gallery.GetGallery(gallery.GetPersistence())
+		imageGallery := gallery.GetReader(gallery.GetPersistence())
 
 		output := formatGallery(imageGallery)
 		output = addGlobalHtml(output)
@@ -34,7 +34,7 @@ func addGlobalHtml(output string) string {
 	return filledTemplate
 }
 
-func formatGallery(gallery interfaces.Gallery) string {
+func formatGallery(gallery interfaces.GalleryReader) string {
 	images := gallery.ImageList()
 	formattedImages := ""
 	for _, image := range images {

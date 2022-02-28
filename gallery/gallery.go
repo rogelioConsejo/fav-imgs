@@ -2,14 +2,26 @@ package gallery
 
 import . "fav-imgs/gallery/interfaces"
 
-type gallery struct {
-	persistence Persistence
+type galleryReader struct {
+	persistence Read
 }
 
-func (g gallery) ImageList() []Image {
+func (g galleryReader) ImageList() []Image {
 	return g.persistence.GetImages()
 }
 
-func GetGallery(persistence Persistence) Gallery {
-	return gallery{persistence: persistence}
+func GetReader(persistence Read) GalleryReader {
+	return galleryReader{persistence: persistence}
+}
+
+type galleryImageAdder struct {
+	persistence Add
+}
+
+func (g galleryImageAdder) Add(image Image) (id uint) {
+	return g.persistence.AddImage(image)
+}
+
+func GetImageAdder(persistence Add) GalleryImageAdder {
+	return &galleryImageAdder{persistence: persistence}
 }

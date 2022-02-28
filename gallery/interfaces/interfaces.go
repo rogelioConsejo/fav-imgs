@@ -1,7 +1,11 @@
 package interfaces
 
-type Gallery interface {
+type GalleryReader interface {
 	ImageList() []Image
+}
+
+type GalleryImageAdder interface {
+	Add(image Image) (id uint)
 }
 
 type Image interface {
@@ -11,6 +15,10 @@ type Image interface {
 
 type Read interface {
 	GetImages() []Image
+}
+
+type Add interface {
+	AddImage(image Image) (id uint)
 }
 
 type Persistence interface {
