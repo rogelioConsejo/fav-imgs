@@ -14,6 +14,11 @@ Just download and build with Golang using `go build`, then run the executable. I
 - Delete image
 - Modify image
 
+## File Structure
+You will find the main method on `main.go` and the main server handler functions on `/server`.
+
+The core code is inside the `/gallery` folder.
+
 ## Architectural notes
 - TDD, 100% coverage for the back-end
 - Instead of using an existing Database technology, I created an AdHoc persistance using Json and a text file (a simple database), which is a lot easier to deploy (no need to set up SQL database), and works well with the current requirements. For this I use a map with automatically generated strings for IDs.
