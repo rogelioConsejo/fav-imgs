@@ -5,4 +5,6 @@ type Gallery interface {
 }
 
 type Image interface {
+	GetTitle() string
+	GetImageUrl() string
 }
