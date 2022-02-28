@@ -1,10 +1,19 @@
 package gallery
 
-type Gallery interface {
-	ImageList() []Image
+import "fav-imgs/gallery/interfaces"
+
+type gallery struct {
+	persistence Persistence
 }
 
-type Image interface {
-	GetTitle() string
-	GetImageUrl() string
+func (g gallery) ImageList() []interfaces.Image {
+	return g.persistence.GetImages()
+}
+
+type Persistence interface {
+	GetImages() []interfaces.Image
+}
+
+func GetGallery(persistence Persistence) interfaces.Gallery {
+	return gallery{persistence: persistence}
 }
