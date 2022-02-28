@@ -47,13 +47,13 @@ func formatGallery(gallery interfaces.GalleryReader) string {
 func addFormattedImage(image interfaces.Image) string {
 	title := image.GetTitle()
 	url := image.GetUrl()
-	return "<figure>" + addTitle(title) + addImage(url) + "</figure>"
+	return "<figure>" + addTitleHTML(title) + addImageHTML(url) + "</figure>"
 }
 
-func addTitle(title string) string {
+func addTitleHTML(title string) string {
 	return "<figcaption>" + title + "</figcaption>"
 }
 
-func addImage(url string) string {
+func addImageHTML(url string) string {
 	return "<img src=\"" + url + "\">"
 }
