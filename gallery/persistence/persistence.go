@@ -13,31 +13,16 @@ type reader struct {
 	images map[string]Image
 }
 
-// GetImages TODO: Handle errors better + refactor
 func (r reader) GetImages() map[string]Image {
-	jsonData, err := os.OpenFile(jsonFile, os.O_RDONLY, 0660)
-	defer jsonData.Close()
-	if err != nil {
-		fmt.Println(err.Error())
-		return nil
-	}
-	stored, err := ioutil.ReadAll(jsonData)
-	if err != nil {
-		fmt.Println(err.Error())
-		return nil
-	}
-	imagesJson := map[string]image.Json{}
-	err = json.Unmarshal(stored, &imagesJson)
-	if err != nil {
-		fmt.Println(err.Error())
-		return nil
-	}
+	images := makeImages(readFromFile())
+	return images
+}
 
+func makeImages(imagesJson map[string]image.Json) map[string]Image {
 	images := make(map[string]Image)
 	for key, imageJson := range imagesJson {
 		images[key] = image.NewImage(imageJson.Title, imageJson.Url)
 	}
-
 	return images
 }
 
@@ -48,56 +33,53 @@ func GetPersistenceReader() Read {
 type adder struct {
 }
 
-// AddImage TODO: Handle errors better + refactor + check if ID exists
 func (a adder) AddImage(newImage Image) (id string) {
+	images := readFromFile()
 
 	id = makeId()
-	fileReader, err := os.OpenFile(jsonFile, os.O_RDONLY|os.O_CREATE, 0660)
-	defer func(jsonData *os.File) {
-		err := jsonData.Close()
-		if err != nil {
-			fmt.Println(err.Error())
-		}
-	}(fileReader)
-	if err != nil {
-		fmt.Println(err.Error())
-		return ""
-	}
-	stored, err := ioutil.ReadAll(fileReader)
-	if err != nil {
-		fmt.Println(err.Error())
-		return ""
-	}
-	var images map[string]image.Json
-	if string(stored) != "" {
-		images = map[string]image.Json{}
-		err = json.Unmarshal(stored, &images)
-		if err != nil {
-			fmt.Println(err.Error())
-			return ""
-		}
-	} else {
-		images = make(map[string]image.Json)
+	_, exists := images[id]
+	for exists {
+		id = makeId()
+		_, exists = images[id]
 	}
 
-	images[id] = image.Json{
+	images[id] = makeJsonTranslatableStruct(newImage)
+	writeToFile(images)
+
+	return id
+}
+
+func makeJsonTranslatableStruct(newImage Image) image.Json {
+	return image.Json{
 		Title: newImage.GetTitle(),
 		Url:   newImage.GetUrl(),
 	}
-	newData, err := json.Marshal(images)
-	fmt.Printf("%s\n", string(newData))
-	if err != nil {
-		fmt.Println(err.Error())
-		return ""
-	}
-	fileWriter, err := os.OpenFile(jsonFile, os.O_TRUNC|os.O_WRONLY, 0660)
-	_, err = fileWriter.Write(newData)
-	if err != nil {
-		fmt.Println(err.Error())
-		return ""
-	}
+}
 
-	return id
+//TODO: Handle errors
+func readFromFile() map[string]image.Json {
+	fileReader, _ := os.OpenFile(jsonFile, os.O_RDONLY|os.O_CREATE, 0660)
+	defer fileReader.Close()
+
+	stored, _ := ioutil.ReadAll(fileReader)
+
+	var images map[string]image.Json
+	if string(stored) != "" {
+		images = map[string]image.Json{}
+		_ = json.Unmarshal(stored, &images)
+	} else {
+		images = make(map[string]image.Json)
+	}
+	return images
+}
+
+//TODO: Handle errors
+func writeToFile(images map[string]image.Json) {
+	newData, _ := json.Marshal(images)
+	fmt.Printf("%s\n", string(newData))
+	fileWriter, _ := os.OpenFile(jsonFile, os.O_TRUNC|os.O_WRONLY, 0660)
+	defer fileWriter.Close()
+	_, _ = fileWriter.Write(newData)
 }
 
 func makeId() string {
