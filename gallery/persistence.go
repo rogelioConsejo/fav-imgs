@@ -7,7 +7,7 @@ type persistence struct {
 }
 
 func (p persistence) GetImages() []Image {
-	return []Image{image.NewImage("1", "url1"), image.NewImage("2", "url2")}
+	return []Image{image.NewImage("1", "https://picsum.photos/200/300"), image.NewImage("2", "https://picsum.photos/300/300")}
 }
 
 func GetPersistence() Persistence {
