@@ -4,12 +4,15 @@ import (
 	"fav-imgs/gallery"
 	"fav-imgs/gallery/interfaces"
 	"fmt"
+	"io/ioutil"
 	"net/http"
+	"strings"
 )
 
 func listImages() func(w http.ResponseWriter, r *http.Request) {
 	return func(w http.ResponseWriter, r *http.Request) {
 		imageGallery := gallery.GetGallery(gallery.GetPersistence())
+
 		output := formatGallery(imageGallery)
 		output = addGlobalHtml(output)
 		_, err := fmt.Fprint(w, output)
@@ -21,7 +24,14 @@ func listImages() func(w http.ResponseWriter, r *http.Request) {
 }
 
 func addGlobalHtml(output string) string {
-	return "<html>" + output + "</html>"
+	htmlTemplate, err := ioutil.ReadFile("templates/basic-template.html")
+	if err != nil {
+		fmt.Println("error adding global html: " + err.Error())
+	}
+	template := string(htmlTemplate)
+	templateWithTitle := strings.ReplaceAll(template, "${TITLE}", "Favorite Images List")
+	filledTemplate := strings.ReplaceAll(templateWithTitle, "${BODY}", output)
+	return filledTemplate
 }
 
 func formatGallery(gallery interfaces.Gallery) string {
