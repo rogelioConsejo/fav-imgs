@@ -1,36 +1,19 @@
 package main
 
 import (
-	. "fav-imgs/gallery"
-	. "fav-imgs/gallery/interfaces"
 	"fmt"
+	"log"
+	"net/http"
 )
 
 func main() {
-	gallery := GetGallery(GetPersistence())
-	output := formatGallery(gallery)
-	fmt.Println(output)
-}
+	port := 8080
 
-func formatGallery(gallery Gallery) string {
-	images := gallery.ImageList()
-	formattedImages := ""
-	for _, image := range images {
-		formattedImages += addFormattedImage(image)
+	http.HandleFunc("/list", listImages())
+
+	fmt.Printf("Starting server at port %d\n", port)
+	if err := http.ListenAndServe(":"+fmt.Sprintf("%d", port), nil); err != nil {
+		log.Fatal(err)
 	}
-	return formattedImages
-}
 
-func addFormattedImage(image Image) string {
-	title := image.GetTitle()
-	url := image.GetUrl()
-	return "<div>" + addTitle(title) + addImage(url) + "</div>"
-}
-
-func addTitle(title string) string {
-	return "<p>" + title + "</p>"
-}
-
-func addImage(url string) string {
-	return "<img src=\"" + url + "\">"
 }
