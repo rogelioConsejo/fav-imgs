@@ -1,11 +1,11 @@
 package main
 
 import (
-	"fav-imgs/gallery"
+	. "fav-imgs/gallery"
 	"fmt"
 )
 
 func main() {
-	fmt.Printf("%+v", gallery.GetGallery())
-
+	imageGallery := GetGallery(GetPersistence())
+	fmt.Printf("%+v", imageGallery.ImageList())
 }
