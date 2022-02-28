@@ -9,6 +9,10 @@ type Image interface {
 	GetUrl() string
 }
 
-type Persistence interface {
+type Read interface {
 	GetImages() []Image
+}
+
+type Persistence interface {
+	Read
 }
