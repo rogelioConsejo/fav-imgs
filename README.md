@@ -1,5 +1,6 @@
 # fav-imgs
-A small sample project of a web system that displays "my favorite pictures"
+A small sample project of a web system in Golang that displays "my favorite pictures".
+My main objective is to demonstrate a clean code and clean architecture approach.
 
 #### Notice how easy it was to implement the last feature (modify image). The structure of the code is SOLID.
 
