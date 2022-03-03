@@ -12,7 +12,7 @@ func TestPersistence_GetImages(t *testing.T) {
 	fmt.Printf("%+v", imageGallery.ImageList())
 }
 
-func TestPersistence_AddImage(t *testing.T) {
+func TestPersistence_AddImage_DeleteImage(t *testing.T) {
 	imageWriter := gallery.GetImageAdder(GetPersistenceAdder())
 	testImage := image.NewImage("test title", "https://picsum.photos/")
 	testImageId := imageWriter.Add(testImage)

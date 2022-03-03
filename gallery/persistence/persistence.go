@@ -9,6 +9,38 @@ import (
 	"os"
 )
 
+type persistence struct {
+	reader  reader
+	adder   adder
+	deleter deleter
+	updater updater
+}
+
+func (p persistence) GetImages() map[string]Image {
+	return p.reader.GetImages()
+}
+
+func (p persistence) AddImage(image Image) (id string) {
+	return p.adder.AddImage(image)
+}
+
+func (p persistence) DeleteImage(id string) {
+	p.deleter.DeleteImage(id)
+}
+
+func (p persistence) Update(id string, image Image) {
+	p.updater.Update(id, image)
+}
+
+func GetPersistence() Persistence {
+	return persistence{
+		reader:  GetPersistenceReader(),
+		adder:   GetPersistenceAdder(),
+		deleter: GetPersistenceDeleter(),
+		updater: GetPersistenceUpdater(),
+	}
+}
+
 type reader struct {
 	images map[string]Image
 }
@@ -18,7 +50,7 @@ func (r reader) GetImages() map[string]Image {
 	return images
 }
 
-func GetPersistenceReader() Read {
+func GetPersistenceReader() reader {
 	return reader{}
 }
 
@@ -41,7 +73,7 @@ func (a adder) AddImage(newImage Image) (id string) {
 	return id
 }
 
-func GetPersistenceAdder() Add {
+func GetPersistenceAdder() adder {
 	return adder{}
 }
 
@@ -54,8 +86,24 @@ func (d deleter) DeleteImage(id string) {
 	writeToFile(images)
 }
 
-func GetPersistenceDeleter() Delete {
+func GetPersistenceDeleter() deleter {
 	return deleter{}
+}
+
+type updater struct {
+}
+
+func (u updater) Update(id string, image Image) {
+	images := readFromFile()
+	_, exists := images[id]
+	if exists {
+		images[id] = makeJsonTranslatableStruct(image)
+	}
+	writeToFile(images)
+}
+
+func GetPersistenceUpdater() updater {
+	return updater{}
 }
 
 func makeImages(imagesJson map[string]image.Json) map[string]Image {
