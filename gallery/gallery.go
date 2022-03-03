@@ -46,6 +46,6 @@ func (g galleryImageModifier) Update(id string, image Image) {
 	g.persistence.Update(id, image)
 }
 
-func GetImageModifier(persistence Persistence) GalleryImageModifier {
+func GetImageModifier(persistence Update) GalleryImageModifier {
 	return galleryImageModifier{persistence: persistence}
 }

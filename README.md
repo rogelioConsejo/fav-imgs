@@ -38,6 +38,7 @@ of the development. I will consider doing this in a future iteration, after impl
 - We follow the Stable Dependencies Principle and Stable Abstractions Principle for coupling
 - I can add the option to add either an image URL or an image file in the future, but for now I wanted to focus on 
 demonstrating the architecture.
+- The front-end is relatively messy because it is the least stable component.
 - I did not add CSS because it is irrelevant for the purpose of this exercise.
 
 ### Important note
