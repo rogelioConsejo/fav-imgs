@@ -13,7 +13,7 @@ func AddImage() func(w http.ResponseWriter, r *http.Request) {
 	return func(w http.ResponseWriter, r *http.Request) {
 		switch r.Method {
 		case http.MethodGet:
-			htmlTemplate, _ := ioutil.ReadFile("gallery/image/add-image.html")
+			htmlTemplate, _ := ioutil.ReadFile("templates/add-image.html")
 			fmt.Fprint(w, string(htmlTemplate))
 			break
 		case http.MethodPost:

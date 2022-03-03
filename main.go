@@ -12,6 +12,7 @@ func main() {
 
 	http.HandleFunc("/list", server.ListImages())
 	http.HandleFunc("/add", server.AddImage())
+	http.HandleFunc("/", server.ListImages())
 
 	fmt.Printf("Starting server at port %d\n", port)
 	if err := http.ListenAndServe(":"+fmt.Sprintf("%d", port), nil); err != nil {
