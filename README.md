@@ -6,8 +6,7 @@ My main objective is to demonstrate a clean code and clean architecture approach
 
 ## how to install
 Just download and build with Golang using `go build`, then run the executable. It will start a server on `http://localhost:8080`
-- To add an image go to `http://localhost:8080/add`
-- To list existing images goto `http://localhost:8080/list`
+- To see the main page (with the list of images) go to `http://localhost:8080`. You should be able to access all functionality from here.
 
 ### Important note
 This version is only for local deployment and testing because of some hard-coded values. I will update it to make it web-deployable in the future.
