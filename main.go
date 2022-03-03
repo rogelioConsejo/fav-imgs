@@ -13,6 +13,7 @@ func main() {
 	http.HandleFunc("/list", server.ListImages())
 	http.HandleFunc("/add", server.AddImage())
 	http.HandleFunc("/delete", server.DeleteImage())
+	http.HandleFunc("/update", server.UpdateImage())
 	http.HandleFunc("/", server.ListImages())
 
 	fmt.Printf("Starting server at port %d\n", port)

@@ -12,8 +12,13 @@ type Delete interface {
 	DeleteImage(id string)
 }
 
+type Update interface {
+	Update(id string, image Image)
+}
+
 type Persistence interface {
 	Read
 	Add
 	Delete
+	Update
 }

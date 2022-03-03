@@ -1,29 +1,20 @@
 package server
 
 import (
-	"errors"
 	"fav-imgs/gallery"
 	"fav-imgs/gallery/persistence"
 	"net/http"
-	"strings"
 )
-
-const idKey = "id"
 
 func DeleteImage() func(w http.ResponseWriter, r *http.Request) {
 	return func(w http.ResponseWriter, r *http.Request) {
 		var err error
-		if !r.URL.Query().Has(idKey) {
-			err = errors.New("id not found")
-		}
+		err = checkForId(r)
 		if err != nil {
 			return
 		}
 
-		var id = r.URL.Query().Get(idKey)
-		if strings.Trim(id, " ") == "" {
-			err = errors.New("id parameter incorrect")
-		}
+		id, err := getId(r)
 		if err != nil {
 			return
 		}
