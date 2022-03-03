@@ -36,7 +36,7 @@ also make them independently deployable, which will in turn make it a lot easier
 for example. I did not do this because I did not want to go back and forth between two different stacks at the beginning 
 of the development. I will consider doing this in a future iteration.
 - We follow the Stable Dependencies Principle and Stable Abstractions Principle for coupling.
-- You can modify the front-end templates without needing to redeploy the software.
+- You can style the front-end templates without needing to redeploy the software.
 - I can add the option to add either an image URL or an image file in the future, but for now I wanted to focus on 
 demonstrating the architecture, so you can only add images by url.
 - The front-end is relatively messy because it is the least stable component.
