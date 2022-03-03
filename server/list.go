@@ -38,22 +38,26 @@ func addGlobalHtml(output string) string {
 func formatGallery(gallery interfaces.GalleryReader) string {
 	images := gallery.ImageList()
 	formattedImages := ""
-	for _, image := range images {
-		formattedImages += addFormattedImage(image)
+	for key, image := range images {
+		formattedImages += addFormattedImage(image, key)
 	}
 	return formattedImages
 }
 
-func addFormattedImage(image interfaces.Image) string {
+func addFormattedImage(image interfaces.Image, key string) string {
 	title := image.GetTitle()
 	url := image.GetUrl()
-	return "<figure>" + addTitleHTML(title) + addImageHTML(url) + "</figure>"
+	return makeListElement(key, title, url)
 }
 
-func addTitleHTML(title string) string {
-	return "<figcaption>" + title + "</figcaption>"
-}
-
-func addImageHTML(url string) string {
-	return "<img src=\"" + url + "\">"
+func makeListElement(key string, title string, url string) string {
+	htmlTemplate, err := ioutil.ReadFile("templates/list-element.html")
+	if err != nil {
+		fmt.Println("error creating list-element html: " + err.Error())
+	}
+	template := string(htmlTemplate)
+	templateWithTitle := strings.ReplaceAll(template, "${IMAGE_TITLE}", title)
+	templateWithTitleAndUrl := strings.ReplaceAll(templateWithTitle, "${IMAGE_URL}", url)
+	filledTemplate := strings.ReplaceAll(templateWithTitleAndUrl, "${IMAGE_KEY}", key)
+	return filledTemplate
 }

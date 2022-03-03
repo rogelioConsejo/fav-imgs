@@ -17,7 +17,7 @@ func TestGalleryViewer_ImageList(t *testing.T) {
 	fmt.Printf("%+v\n", testViewer.ImageList()[stubImageId].GetUrl())
 }
 
-func TestGalleryImageAdder_Add(t *testing.T) {
+func TestGalleryImageAdder_Add_Delete(t *testing.T) {
 	var fakePersistence = MakeMockPersistence()
 	var testImageAdder GalleryImageAdder = GetImageAdder(fakePersistence)
 	testImage1 := image.NewImage("test image title 1", "https://picsum.photos/300/300")
@@ -33,6 +33,13 @@ func TestGalleryImageAdder_Add(t *testing.T) {
 	retrievedImage2 := testReader.ImageList()[imageId2]
 	fmt.Printf("%+v\n", retrievedImage2.GetTitle())
 	fmt.Printf("%+v\n", retrievedImage2.GetUrl())
+
+	var testImageDeleter GalleryImageDeleter = GetImageDeleter(fakePersistence)
+	testImageDeleter.Delete(imageId1)
+	testImageDeleter.Delete(imageId2)
+	if len(testReader.ImageList()) != 0 {
+		t.Error("images not deleted")
+	}
 }
 
 type stubPersistence struct {
@@ -48,6 +55,10 @@ func (s stubPersistence) GetImages() map[string]Image {
 
 type mockPersistence struct {
 	images map[string]Image
+}
+
+func (m *mockPersistence) DeleteImage(id string) {
+	delete(m.images, id)
 }
 
 func MakeMockPersistence() Persistence {

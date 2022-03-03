@@ -24,4 +24,11 @@ func TestPersistence_AddImage(t *testing.T) {
 	fmt.Printf("%+v", imageGallery.ImageList()[testImageId].GetTitle())
 	fmt.Printf("%+v", imageGallery.ImageList()[testImageId].GetUrl())
 
+	imageDeleter := gallery.GetImageDeleter(GetPersistenceDeleter())
+	imageDeleter.Delete(testImageId)
+
+	imageReader := gallery.GetReader(GetPersistenceReader())
+	if len(imageReader.ImageList()) != 0 {
+		t.Error("images not deleted correctly")
+	}
 }

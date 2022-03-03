@@ -25,3 +25,15 @@ func (g galleryImageAdder) Add(image Image) (id string) {
 func GetImageAdder(persistence Add) GalleryImageAdder {
 	return &galleryImageAdder{persistence: persistence}
 }
+
+type galleryImageDeleter struct {
+	persistence Delete
+}
+
+func (g galleryImageDeleter) Delete(id string) {
+	g.persistence.DeleteImage(id)
+}
+
+func GetImageDeleter(persistence Delete) GalleryImageDeleter {
+	return &galleryImageDeleter{persistence: persistence}
+}
