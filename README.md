@@ -4,6 +4,8 @@ My main objective is to demonstrate a clean code and clean architecture approach
 
 #### Notice how easy it was to implement the last features (delete and modify image), without the risk of breaking anything. The structure of the code is SOLID.
 
+The next step would be to generalize the front-end by making it a Json interface (and build a new, independently deployable front-end) and to make the persistence implementation into a plugin, but for now plugins are not yet available in windows for Go, so I will wait for them before I do it.
+
 ## how to install
 Just download and build with Golang using `go build`, then run the executable. It will start a server on `http://localhost:8080`
 - To see the main page (with the list of images) go to `http://localhost:8080`. You should be able to access all functionality from here.
