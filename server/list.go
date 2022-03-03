@@ -47,17 +47,17 @@ func formatGallery(gallery interfaces.GalleryReader) string {
 func addFormattedImage(image interfaces.Image, key string) string {
 	title := image.GetTitle()
 	url := image.GetUrl()
-	return "<figure>" + addTitle(title) + addImage(url) + addDeleteButton(key) + "</figure>"
+	return makeListElement(key, title, url)
 }
 
-func addDeleteButton(key string) string {
-	return "<a href=\"http://localhost:8080/delete?id=" + key + "\"> Delete Image </a>"
-}
-
-func addTitle(title string) string {
-	return "<figcaption>" + title + "</figcaption>"
-}
-
-func addImage(url string) string {
-	return "<img src=\"" + url + "\">"
+func makeListElement(key string, title string, url string) string {
+	htmlTemplate, err := ioutil.ReadFile("templates/list-element.html")
+	if err != nil {
+		fmt.Println("error creating list-element html: " + err.Error())
+	}
+	template := string(htmlTemplate)
+	templateWithTitle := strings.ReplaceAll(template, "${IMAGE_TITLE}", title)
+	templateWithTitleAndUrl := strings.ReplaceAll(templateWithTitle, "${IMAGE_URL}", url)
+	filledTemplate := strings.ReplaceAll(templateWithTitleAndUrl, "${IMAGE_KEY}", key)
+	return filledTemplate
 }
