@@ -18,14 +18,6 @@ func (r reader) GetImages() map[string]Image {
 	return images
 }
 
-func makeImages(imagesJson map[string]image.Json) map[string]Image {
-	images := make(map[string]Image)
-	for key, imageJson := range imagesJson {
-		images[key] = image.NewImage(imageJson.Title, imageJson.Url)
-	}
-	return images
-}
-
 func GetPersistenceReader() Read {
 	return reader{}
 }
@@ -47,6 +39,31 @@ func (a adder) AddImage(newImage Image) (id string) {
 	writeToFile(images)
 
 	return id
+}
+
+func GetPersistenceAdder() Add {
+	return adder{}
+}
+
+type deleter struct {
+}
+
+func (d deleter) DeleteImage(id string) {
+	images := readFromFile()
+	delete(images, id)
+	writeToFile(images)
+}
+
+func GetPersistenceDeleter() Delete {
+	return deleter{}
+}
+
+func makeImages(imagesJson map[string]image.Json) map[string]Image {
+	images := make(map[string]Image)
+	for key, imageJson := range imagesJson {
+		images[key] = image.NewImage(imageJson.Title, imageJson.Url)
+	}
+	return images
 }
 
 func makeJsonTranslatableStruct(newImage Image) image.Json {
@@ -84,10 +101,6 @@ func writeToFile(images map[string]image.Json) {
 
 func makeId() string {
 	return RandStringRunes(15)
-}
-
-func GetPersistenceAdder() Add {
-	return adder{}
 }
 
 const jsonFile = "./data.json"
