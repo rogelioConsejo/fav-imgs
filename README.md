@@ -1,8 +1,8 @@
 # fav-imgs
-A small sample project of a web system in Golang that displays "my favorite pictures".
+A small sample project of a web system in Golang that stores and displays "my favorite pictures".
 My main objective is to demonstrate a clean code and clean architecture approach.
 
-#### Notice how easy it was to implement the last feature (modify image). The structure of the code is SOLID.
+#### Notice how easy it was to implement the last features (delete and modify image), without the risk of breaking anything. The structure of the code is SOLID.
 
 ## how to install
 Just download and build with Golang using `go build`, then run the executable. It will start a server on `http://localhost:8080`
@@ -16,9 +16,8 @@ This version is only for local deployment and testing because of some hard-coded
 - List all images
 - Add image
 - Delete image
-
-## Pending Implementation
 - Modify image
+
 
 ## File Structure
 You will find the main method on `main.go` and the main server handler functions on `/server`.
