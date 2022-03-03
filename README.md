@@ -1,6 +1,6 @@
 # fav-imgs
 A small sample project of a web system in Golang that stores and displays "my favorite pictures".
-My main objective is to demonstrate a clean code and clean architecture approach.
+My main objective is to demonstrate a clean code and clean architecture approach. 🧱
 
 #### Notice how easy it was to implement the last features (delete and modify image), without the risk of breaking anything. The structure of the code is SOLID.
 
@@ -21,7 +21,7 @@ This version is only for local deployment and testing because of some hard-coded
 ## File Structure
 You will find the main method on `main.go` and the main server handler functions on `/server`.
 
-The core code is inside the `/gallery` folder.
+⚠️**The core code is inside the `/gallery` folder.** 
 
 ## Architectural notes
 - TDD, 100% coverage for the back-end
@@ -32,12 +32,12 @@ requirements. For this I use a map with automatically generated strings for IDs.
 an API, and then building the front-end separately (using React, for example, to get a more dynamic page). That will 
 also make them independently deployable, which will in turn make it a lot easier to build an Android or iOS client App, 
 for example. I did not do this because I did not want to go back and forth between two different stacks at the beginning 
-of the development. I will consider doing this in a future iteration, after implementing all 4 basic behaviours.
-- We follow the Stable Dependencies Principle and Stable Abstractions Principle for coupling
+of the development. I will consider doing this in a future iteration.
+- We follow the Stable Dependencies Principle and Stable Abstractions Principle for coupling.
 - I can add the option to add either an image URL or an image file in the future, but for now I wanted to focus on 
-demonstrating the architecture.
+demonstrating the architecture, so you can only add images by url.
 - The front-end is relatively messy because it is the least stable component.
-- I did not add CSS because it is irrelevant for the purpose of this exercise.
+- I did not add CSS because it is irrelevant for the purpose of this exercise.  🥱
 
 ### Important note
 Some refactor is still needed, but the code is kept clean.
