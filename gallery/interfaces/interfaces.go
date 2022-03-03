@@ -12,6 +12,10 @@ type GalleryImageDeleter interface {
 	Delete(id string)
 }
 
+type GalleryImageModifier interface {
+	Update(id string, image Image)
+}
+
 type Image interface {
 	GetTitle() string
 	GetUrl() string

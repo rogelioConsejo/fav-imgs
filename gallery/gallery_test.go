@@ -17,7 +17,7 @@ func TestGalleryViewer_ImageList(t *testing.T) {
 	fmt.Printf("%+v\n", testViewer.ImageList()[stubImageId].GetUrl())
 }
 
-func TestGalleryImageAdder_Add_Delete(t *testing.T) {
+func TestGalleryImageAdder_Add_Modify_Delete(t *testing.T) {
 	var fakePersistence = MakeMockPersistence()
 	var testImageAdder GalleryImageAdder = GetImageAdder(fakePersistence)
 	testImage1 := image.NewImage("test image title 1", "https://picsum.photos/300/300")
@@ -33,6 +33,19 @@ func TestGalleryImageAdder_Add_Delete(t *testing.T) {
 	retrievedImage2 := testReader.ImageList()[imageId2]
 	fmt.Printf("%+v\n", retrievedImage2.GetTitle())
 	fmt.Printf("%+v\n", retrievedImage2.GetUrl())
+
+	testImageModifier := GetImageModifier(fakePersistence)
+	const modifiedTitle = "This is the modified image"
+	const modifiedUrl = "https://picsum.photos/500/500"
+	newImage := image.NewImage(modifiedTitle, modifiedUrl)
+	testImageModifier.Update(imageId1, newImage)
+
+	if testReader.ImageList()[imageId1].GetTitle() != modifiedTitle {
+		t.Error("image title not correctly modified")
+	}
+	if testReader.ImageList()[imageId1].GetUrl() != modifiedUrl {
+		t.Error("image url not correctly modified")
+	}
 
 	var testImageDeleter GalleryImageDeleter = GetImageDeleter(fakePersistence)
 	testImageDeleter.Delete(imageId1)
@@ -55,6 +68,10 @@ func (s stubPersistence) GetImages() map[string]Image {
 
 type mockPersistence struct {
 	images map[string]Image
+}
+
+func (m *mockPersistence) Update(id string, image Image) {
+	m.images[id] = image
 }
 
 func (m *mockPersistence) DeleteImage(id string) {

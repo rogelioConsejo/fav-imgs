@@ -37,3 +37,15 @@ func (g galleryImageDeleter) Delete(id string) {
 func GetImageDeleter(persistence Delete) GalleryImageDeleter {
 	return &galleryImageDeleter{persistence: persistence}
 }
+
+type galleryImageModifier struct {
+	persistence Update
+}
+
+func (g galleryImageModifier) Update(id string, image Image) {
+	g.persistence.Update(id, image)
+}
+
+func GetImageModifier(persistence Persistence) GalleryImageModifier {
+	return galleryImageModifier{persistence: persistence}
+}
