@@ -1,5 +1,6 @@
 <figure>
     <figcaption>${IMAGE_TITLE}</figcaption>
     <img src="${IMAGE_URL}" alt="${IMAGE_TITLE}">
-   <p> <a href="http://localhost:8080/delete?id=${IMAGE_KEY}"> Delete Image </a></p>
+    <p><a href="http://localhost:8080/delete?id=${IMAGE_KEY}"> Delete Image </a> <span> - </span>
+        <a href="http://localhost:8080/update?id=${IMAGE_KEY}&title=${IMAGE_TITLE}&url=${IMAGE_URL}">Update Image</a></p>
 </figure>

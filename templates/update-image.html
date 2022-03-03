@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Add Image</title>
+</head>
+<body>
+<form action="http://localhost:8080/update" method="post">
+    <label>
+        Image Title:
+        <input type="text" id="title" name="title" value="${IMAGE_TITLE}">
+    </label>
+    <label>
+        Image Url:
+        <input type="text" id="url" name="url" value="${IMAGE_URL}">
+    </label>
+    <label><input hidden type="text" name="id" id="id" value="${IMAGE_ID}"></label>
+
+    <button type="submit">Update Image</button>
+</form>
+<p><a href="http://localhost:8080/">Go back</a></p>
+</body>
+</html>
